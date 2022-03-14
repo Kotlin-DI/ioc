@@ -1,4 +1,4 @@
-package ioc
+package scopes
 
 import (
 	"sync"
@@ -8,12 +8,13 @@ import (
 
 type Scope struct {
 	parent  IScope
-	storage map[string]Dependency
+	storage map[string]common.Dependency
 	lock    sync.RWMutex
 }
 
-func (s *Scope) Get(key string) (common.Any, error) {
-	var dep Dependency
+func (s *Scope) Get(key string) (common.Dependency, error) {
+
+	var dep common.Dependency
 	var err error
 	s.lock.RLock()
 	dep, ok := s.storage[key]
@@ -24,15 +25,22 @@ func (s *Scope) Get(key string) (common.Any, error) {
 		if err != nil {
 			return nil, err
 		} else {
-			dep = res.(Dependency)
+			dep = res.(common.Dependency)
 		}
 	}
 	return dep, nil
 }
 
-func (s *Scope) Set(key string, value Dependency) error {
+func (s *Scope) Set(key string, value common.Dependency) error {
 	s.lock.Lock()
 	s.storage[key] = value
 	s.lock.Unlock()
 	return nil
+}
+
+func NewScope(parrent IScope) *Scope {
+	var scope = new(Scope)
+	scope.parent = parrent
+	scope.storage = map[string]common.Dependency{}
+	return scope
 }
