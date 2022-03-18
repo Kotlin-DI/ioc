@@ -12,6 +12,16 @@ func (c *RegisterCommand) Invoke() error {
 	return c.scope.Set(c.key, c.value)
 }
 
+type UnregisterCommand struct {
+	scope IScope
+	key   string
+}
+
+func (c *UnregisterCommand) Invoke() error {
+	c.scope.Remove(c.key)
+	return nil
+}
+
 type ScopeExecutionCommand struct {
 	executionScope IScope
 	fn             func() error

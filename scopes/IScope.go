@@ -2,9 +2,7 @@ package scopes
 
 import (
 	"github.com/IoC-Tools/common"
+	"github.com/IoC-Tools/common/uobject"
 )
 
-type IScope interface {
-	Set(key string, value common.Dependency) error
-	Get(key string) (common.Dependency, error)
-}
+type IScope = uobject.UObject[common.Dependency]

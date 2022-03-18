@@ -17,7 +17,7 @@ func (s *RootScope) Get(key string) (common.Dependency, error) {
 	dep, ok := s.storage[key]
 	s.lock.RUnlock()
 	if !ok {
-		return nil, ScopeErrorNotFound{}
+		return nil, ScopeErrorNotFound{key: key}
 	}
 	return dep, nil
 }
@@ -25,6 +25,8 @@ func (s *RootScope) Get(key string) (common.Dependency, error) {
 func (s *RootScope) Set(key string, value common.Dependency) error {
 	return ScopeErrorImmutable{}
 }
+
+func (s *RootScope) Remove(key string) {}
 
 func NewRootScope() *RootScope {
 	var root = new(RootScope)
@@ -34,7 +36,15 @@ func NewRootScope() *RootScope {
 		var key = a[0].(string)
 		var value = a[1].(common.Dependency)
 		var scope = GetCurrentScope()
-		return RegisterCommand{scope: scope, key: key, value: value}, nil
+
+		return &RegisterCommand{key: key, value: value, scope: scope}, nil
+	}
+
+	root.storage["IoC.UNREGISTER"] = func(a []common.Any) (common.Any, error) {
+		var key = a[0].(string)
+		var scope = GetCurrentScope()
+
+		return &UnregisterCommand{key: key, scope: scope}, nil
 	}
 
 	root.storage["Scope.NEW"] = func(a []common.Any) (common.Any, error) {
@@ -52,10 +62,17 @@ func NewRootScope() *RootScope {
 	}
 
 	root.storage["IoC.EXECUTE_IN_SCOPE"] = func(a []common.Any) (common.Any, error) {
-		var executionScope = a[0].(IScope)
-		var fn = a[1].(func() error)
-		return ScopeExecutionCommand{executionScope: executionScope, fn: fn}, nil
+		executionScope := a[0].(IScope)
+		fn := a[1].(func() error)
+		return &ScopeExecutionCommand{executionScope: executionScope, fn: fn}, nil
+	}
 
+	root.storage["IoC.EXECUTE_IN_NEW_SCOPE"] = func(a []common.Any) (common.Any, error) {
+		fn := a[0].(func() error)
+		current := GetCurrentScope()
+		newScope, _ := current.Get("Scope.NEW")
+		executionScope, _ := newScope([]common.Any{current})
+		return &ScopeExecutionCommand{executionScope: executionScope.(IScope), fn: fn}, nil
 	}
 
 	return root

@@ -13,7 +13,6 @@ type Scope struct {
 }
 
 func (s *Scope) Get(key string) (common.Dependency, error) {
-
 	var dep common.Dependency
 	var err error
 	s.lock.RLock()
@@ -36,6 +35,12 @@ func (s *Scope) Set(key string, value common.Dependency) error {
 	s.storage[key] = value
 	s.lock.Unlock()
 	return nil
+}
+
+func (s *Scope) Remove(key string) {
+	s.lock.Lock()
+	delete(s.storage, key)
+	s.lock.Unlock()
 }
 
 func NewScope(parrent IScope) *Scope {
