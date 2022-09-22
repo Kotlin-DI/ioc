@@ -1,4 +1,4 @@
-package com.kotlin_di
+package com.github.kotlin_di
 
 import com.github.kotlin_di.ioc.Container
 import com.github.kotlin_di.ioc.ResolveDependencyError
