@@ -1,9 +1,9 @@
-package com.kotlin_di.test
+package com.github.kotlin_di.test
 
-import com.kotlin_di.common.command.Command
-import com.kotlin_di.common.interfaces.Usable
-import com.kotlin_di.ioc.ResolveDependencyError
-import com.kotlin_di.ioc.asDependency
+import com.github.kotlin_di.common.command.Command
+import com.github.kotlin_di.common.interfaces.Usable
+import com.github.kotlin_di.ioc.ResolveDependencyError
+import com.github.kotlin_di.ioc.asDependency
 import com.kotlin_di.resolve
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

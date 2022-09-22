@@ -1,10 +1,10 @@
-package com.kotlin_di.test
+package com.github.kotlin_di.test
 
-import com.kotlin_di.common.interfaces.Usable
-import com.kotlin_di.ioc.Container
-import com.kotlin_di.ioc.ResolveDependencyError
-import com.kotlin_di.ioc.scope.IScope
-import com.kotlin_di.ioc.scope.MutableScope
+import com.github.kotlin_di.common.interfaces.Usable
+import com.github.kotlin_di.ioc.Container
+import com.github.kotlin_di.ioc.ResolveDependencyError
+import com.github.kotlin_di.ioc.scope.IScope
+import com.github.kotlin_di.ioc.scope.MutableScope
 import com.kotlin_di.resolve
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

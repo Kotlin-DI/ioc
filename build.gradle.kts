@@ -12,7 +12,7 @@ plugins {
 
 val kotlinVersion: String by project
 
-group = "com.kotlin_di"
+group = "com.github.kotlin_di"
 version = "0.0.0-SNAPSHOT"
 gitVersioning.apply {
     refs {
@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-    implementation("com.github.Kotlin-DI:common:0.0.1")
+    implementation("com.github.Kotlin-DI:common:0.0.3")
     testImplementation(platform("org.junit:junit-bom:5.9.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }

@@ -1,6 +1,6 @@
-package com.kotlin_di.ioc.scope
+package com.github.kotlin_di.ioc.scope
 
-import com.kotlin_di.ioc.Dependency
+import com.github.kotlin_di.ioc.Dependency
 
 interface LinkedScope : IScope {
     val parent: IScope

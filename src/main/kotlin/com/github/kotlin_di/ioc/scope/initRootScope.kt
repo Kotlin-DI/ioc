@@ -1,10 +1,10 @@
-package com.kotlin_di.ioc.scope
+package com.github.kotlin_di.ioc.scope
 
-import com.kotlin_di.common.interfaces.Usable
-import com.kotlin_di.ioc.dependencies.ExecuteInScope
-import com.kotlin_di.ioc.dependencies.Register
-import com.kotlin_di.ioc.dependencies.ScopeNew
-import com.kotlin_di.ioc.dependencies.Unregister
+import com.github.kotlin_di.common.interfaces.Usable
+import com.github.kotlin_di.ioc.dependencies.ExecuteInScope
+import com.github.kotlin_di.ioc.dependencies.Register
+import com.github.kotlin_di.ioc.dependencies.ScopeNew
+import com.github.kotlin_di.ioc.dependencies.Unregister
 import com.kotlin_di.resolve
 
 fun RootScope.init() {

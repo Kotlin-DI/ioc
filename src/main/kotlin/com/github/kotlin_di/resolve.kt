@@ -1,7 +1,7 @@
 package com.kotlin_di
 
-import com.kotlin_di.ioc.Container
-import com.kotlin_di.ioc.ResolveDependencyError
+import com.github.kotlin_di.ioc.Container
+import com.github.kotlin_di.ioc.ResolveDependencyError
 import kotlin.jvm.Throws
 
 @Throws(ResolveDependencyError::class)

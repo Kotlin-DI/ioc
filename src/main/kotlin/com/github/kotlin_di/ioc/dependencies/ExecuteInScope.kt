@@ -1,11 +1,11 @@
-package com.kotlin_di.ioc.dependencies
+package com.github.kotlin_di.ioc.dependencies
 
-import com.kotlin_di.common.interfaces.Usable
-import com.kotlin_di.ioc.Container
-import com.kotlin_di.ioc.Dependency
-import com.kotlin_di.ioc.ResolveDependencyError
-import com.kotlin_di.ioc.cast
-import com.kotlin_di.ioc.scope.IScope
+import com.github.kotlin_di.common.interfaces.Usable
+import com.github.kotlin_di.ioc.Container
+import com.github.kotlin_di.ioc.Dependency
+import com.github.kotlin_di.ioc.ResolveDependencyError
+import com.github.kotlin_di.ioc.cast
+import com.github.kotlin_di.ioc.scope.IScope
 import java.io.Closeable
 import kotlin.Throws
 

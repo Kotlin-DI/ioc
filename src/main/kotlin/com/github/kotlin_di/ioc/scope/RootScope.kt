@@ -1,7 +1,7 @@
-package com.kotlin_di.ioc.scope
+package com.github.kotlin_di.ioc.scope
 
-import com.kotlin_di.ioc.Dependency
-import com.kotlin_di.ioc.ResolveDependencyError
+import com.github.kotlin_di.ioc.Dependency
+import com.github.kotlin_di.ioc.ResolveDependencyError
 import java.util.concurrent.ConcurrentHashMap
 
 class RootScope : IScope {

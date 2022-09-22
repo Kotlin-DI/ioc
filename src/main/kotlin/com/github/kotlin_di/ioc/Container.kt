@@ -1,9 +1,9 @@
-package com.kotlin_di.ioc
+package com.github.kotlin_di.ioc
 
-import com.kotlin_di.ioc.scope.IScope
-import com.kotlin_di.ioc.scope.RootScope
-import com.kotlin_di.ioc.scope.Scope
-import com.kotlin_di.ioc.scope.init
+import com.github.kotlin_di.ioc.scope.IScope
+import com.github.kotlin_di.ioc.scope.RootScope
+import com.github.kotlin_di.ioc.scope.Scope
+import com.github.kotlin_di.ioc.scope.init
 import kotlin.concurrent.getOrSet
 
 object Container {

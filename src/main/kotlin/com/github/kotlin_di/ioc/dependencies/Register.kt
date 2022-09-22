@@ -1,12 +1,12 @@
-package com.kotlin_di.ioc.dependencies
+package com.github.kotlin_di.ioc.dependencies
 
-import com.kotlin_di.common.command.Command
-import com.kotlin_di.common.command.CommandExecutionError
-import com.kotlin_di.ioc.Container
-import com.kotlin_di.ioc.Dependency
-import com.kotlin_di.ioc.ResolveDependencyError
-import com.kotlin_di.ioc.cast
-import com.kotlin_di.ioc.scope.MutableScope
+import com.github.kotlin_di.common.command.Command
+import com.github.kotlin_di.common.command.CommandExecutionError
+import com.github.kotlin_di.ioc.Container
+import com.github.kotlin_di.ioc.Dependency
+import com.github.kotlin_di.ioc.ResolveDependencyError
+import com.github.kotlin_di.ioc.cast
+import com.github.kotlin_di.ioc.scope.MutableScope
 import kotlin.Throws
 
 class Register : Dependency {

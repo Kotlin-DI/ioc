@@ -1,6 +1,6 @@
-package com.kotlin_di.ioc.scope
+package com.github.kotlin_di.ioc.scope
 
-import com.kotlin_di.ioc.Dependency
+import com.github.kotlin_di.ioc.Dependency
 
 interface MutableScope : IScope {
     operator fun set(key: String, dependency: Dependency)

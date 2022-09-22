@@ -1,4 +1,4 @@
-package com.kotlin_di.ioc
+package com.github.kotlin_di.ioc
 
 typealias Dependency = (Array<out Any>) -> Any
 
