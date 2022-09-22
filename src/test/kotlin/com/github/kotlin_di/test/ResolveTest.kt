@@ -4,7 +4,7 @@ import com.github.kotlin_di.common.command.Command
 import com.github.kotlin_di.common.interfaces.Usable
 import com.github.kotlin_di.ioc.ResolveDependencyError
 import com.github.kotlin_di.ioc.asDependency
-import com.kotlin_di.resolve
+import com.github.kotlin_di.resolve
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

@@ -5,7 +5,7 @@ import com.github.kotlin_di.ioc.Container
 import com.github.kotlin_di.ioc.ResolveDependencyError
 import com.github.kotlin_di.ioc.scope.IScope
 import com.github.kotlin_di.ioc.scope.MutableScope
-import com.kotlin_di.resolve
+import com.github.kotlin_di.resolve
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
