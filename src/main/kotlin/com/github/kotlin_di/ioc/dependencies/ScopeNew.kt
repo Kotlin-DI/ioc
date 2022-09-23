@@ -11,7 +11,7 @@ import kotlin.jvm.Throws
 class ScopeNew : Dependency {
 
     @Throws(ResolveDependencyError::class)
-    override fun invoke(arguments: Array<out Any>): Any {
+    override fun invoke(arguments: Array<out Any>): IScope {
         val parent: IScope = if (arguments.isNotEmpty()) {
             cast(arguments[0])
         } else {

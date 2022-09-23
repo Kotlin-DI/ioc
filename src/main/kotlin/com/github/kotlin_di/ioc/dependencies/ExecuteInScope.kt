@@ -28,7 +28,7 @@ class ExecuteInScope : Dependency {
     }
 
     @Throws(ResolveDependencyError::class)
-    override fun invoke(args: Array<out Any>): Any {
+    override fun invoke(args: Array<out Any>): Usable {
         try {
             val scope: IScope = cast(args[0])
             return ScopeGuard(scope)

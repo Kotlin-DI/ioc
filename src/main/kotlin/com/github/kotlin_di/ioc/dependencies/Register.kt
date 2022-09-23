@@ -28,7 +28,7 @@ class Register : Dependency {
     }
 
     @Throws(ResolveDependencyError::class)
-    override fun invoke(arguments: Array<out Any>): Any {
+    override fun invoke(arguments: Array<out Any>): Command {
         try {
             val scope: MutableScope = cast(Container.currentScope)
             val key: String = cast(arguments[0])
