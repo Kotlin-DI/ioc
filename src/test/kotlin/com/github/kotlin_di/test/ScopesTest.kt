@@ -14,7 +14,7 @@ class ScopesTest {
     fun `ScopeGuard should redo previous scope`() {
         val scope = Container.currentScope
 
-        resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
+        resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
             assertNotEquals(scope, Container.currentScope)
         }
 
@@ -24,13 +24,13 @@ class ScopesTest {
     @Test
     fun `Method set of Scope class should change current scope`() {
 
-        resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
+        resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
 
             assertThrows<ResolveDependencyError> {
                 resolve<Int>("dependency")
             }
 
-            val scope = resolve(Scopes.NEW) as MutableScope
+            val scope = resolve(Scopes.NEW()) as MutableScope
 
             scope["dependency"] = { 1 }
 
@@ -42,14 +42,14 @@ class ScopesTest {
 
     @Test
     fun `It is possible to create new scope by default`() {
-        assertNotNull(resolve(Scopes.NEW))
+        assertNotNull(resolve(Scopes.NEW()))
     }
 
     @Test
     fun `Scope exception rollbacks current scope`() {
         val scope = Container.currentScope
         assertThrows<Error> {
-            resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
+            resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
                 assertNotEquals(scope, Container.currentScope)
                 throw Error("test")
             }

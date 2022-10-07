@@ -12,11 +12,12 @@ import org.junit.jupiter.api.assertThrows
 class ResolveTest {
     @Test
     fun `function resolve should resolve registered dependency by name`() {
-        resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
+        resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
             resolve(
-                IoC.REGISTER,
-                "dependencyKey",
-                asDependency { 1 }
+                IoC.REGISTER(
+                    "dependencyKey",
+                    asDependency { 1 }
+                )
             )()
             assertEquals(1, resolve("dependencyKey"))
         }
@@ -24,26 +25,27 @@ class ResolveTest {
 
     @Test
     fun `unregister should remove registered dependency from current scope`() {
-        resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
+        resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
             resolve(
-                IoC.REGISTER,
-                "dependencyKey",
-                asDependency { 1 }
+                IoC.REGISTER(
+                    "dependencyKey",
+                    asDependency { 1 }
+                )
             )()
             assertEquals(1, resolve("dependencyKey"))
 
-            resolve(IoC.UNREGISTER, "dependencyKey")()
+            resolve(IoC.UNREGISTER("dependencyKey"))()
         }
     }
 
     @Test
     fun `function resolve should use current dependencies scope to resolve dependency`() {
-        resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
-            resolve(IoC.REGISTER, "dependencyKey", asDependency { 1 })()
+        resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
+            resolve(IoC.REGISTER("dependencyKey", asDependency { 1 }))()
             assertEquals(1, resolve("dependencyKey"))
 
-            resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
-                resolve(IoC.REGISTER, "dependencyKey", asDependency { 2 })()
+            resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
+                resolve(IoC.REGISTER("dependencyKey", asDependency { 2 }))()
                 assertEquals(2, resolve("dependencyKey"))
             }
 
@@ -53,29 +55,30 @@ class ResolveTest {
 
     @Test
     fun `IoC dependency may be redefined`() {
-        resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
-            resolve(IoC.REGISTER, "dependencyKey", asDependency { 1 })()
+        resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
+            resolve(IoC.REGISTER("dependencyKey", asDependency { 1 }))()
             assertEquals(1, resolve("dependencyKey"))
 
-            resolve(IoC.REGISTER, "dependencyKey", asDependency { 2 })()
+            resolve(IoC.REGISTER("dependencyKey", asDependency { 2 }))()
             assertEquals(2, resolve("dependencyKey"))
         }
     }
 
     @Test
     fun `resolve should throw ResolveDependencyError if resolving dependency didn't registered`() {
-        resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
+        resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
             assertThrows<ResolveDependencyError> { resolve<Unit>("non-existing dependency") }
         }
     }
 
     @Test
     fun `resolve should throw ResolveDependencyError if resolve dependency strategy throw ResolveDependencyError`() {
-        resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
+        resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
             resolve(
-                IoC.REGISTER,
-                "dependencyKey",
-                asDependency { throw ResolveDependencyError("Error") }
+                IoC.REGISTER(
+                    "dependencyKey",
+                    asDependency { throw ResolveDependencyError("Error") }
+                )
             )()
 
             assertThrows<ResolveDependencyError> { resolve<Unit>("dependencyKey") }

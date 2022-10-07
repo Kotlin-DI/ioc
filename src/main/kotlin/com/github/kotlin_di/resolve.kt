@@ -17,9 +17,9 @@ inline fun <reified T> resolve(key: String, vararg arguments: Any): T {
 }
 
 @Throws(ResolveDependencyError::class)
-inline fun <reified T> resolve(key: Key<T>, vararg arguments: Any): T {
+inline fun <reified T> resolve(key: Key<T>): T {
     try {
-        return Container.currentScope[key._name](arguments) as T
+        return Container.currentScope[key.name](key.args) as T
     } catch (ex: ResolveDependencyError) {
         throw ex
     } catch (ex: Throwable) {
