@@ -41,8 +41,9 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-    implementation("com.github.Kotlin-DI:common:0.0.5")
+    implementation("com.github.kotlin_di:common:main-SNAPSHOT")
     testImplementation(platform("org.junit:junit-bom:5.9.0"))
+    testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", "1.6.4")
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 

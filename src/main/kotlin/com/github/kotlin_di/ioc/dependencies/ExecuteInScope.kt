@@ -1,15 +1,14 @@
 package com.github.kotlin_di.ioc.dependencies
 
 import com.github.kotlin_di.common.interfaces.Usable
+import com.github.kotlin_di.common.types.Dependency
 import com.github.kotlin_di.ioc.Container
-import com.github.kotlin_di.ioc.Dependency
 import com.github.kotlin_di.ioc.ResolveDependencyError
-import com.github.kotlin_di.ioc.cast
 import com.github.kotlin_di.ioc.scope.IScope
 import java.io.Closeable
 import kotlin.Throws
 
-class ExecuteInScope : Dependency {
+class ExecuteInScope : Dependency<IScope, Usable> {
 
     class ScopeGuard(private val scope: IScope) : Usable {
 
@@ -28,10 +27,9 @@ class ExecuteInScope : Dependency {
     }
 
     @Throws(ResolveDependencyError::class)
-    override fun invoke(args: Array<out Any>): Usable {
+    override fun invoke(args: IScope): Usable {
         try {
-            val scope: IScope = cast(args[0])
-            return ScopeGuard(scope)
+            return ScopeGuard(args)
         } catch (ex: ResolveDependencyError) {
             throw ex
         } catch (ex: Throwable) {

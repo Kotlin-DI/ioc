@@ -1,32 +1,30 @@
 package com.github.kotlin_di.ioc
 
 import com.github.kotlin_di.common.interfaces.Usable
+import com.github.kotlin_di.common.types.Key
+import com.github.kotlin_di.common.types.Option
 import com.github.kotlin_di.ioc.scope.IScope
 
 object Scopes {
     /** executes block of code in a specified scope. after execution set back original scope
-     * @param arg0 execution scope
+     * @param arg execution scope
      *
      * @sample executeInScopeSample
      */
-    fun EXECUTE_IN_SCOPE(arg0: IScope) = Key<Usable>("Scopes.executeInScope", arrayOf(arg0))
+    val EXECUTE_IN_SCOPE = Key<IScope, Usable>("Scopes.executeInScope")
 
     /** executes block of code in a new scope. after execution set back original scope
      * @sample executeInNewScopeSample
      */
-    fun EXECUTE_IN_NEW_SCOPE() = Key<Usable>("Scopes.executeInNewScope")
+    val EXECUTE_IN_NEW_SCOPE = Key<Unit, Usable>("Scopes.executeInNewScope")
 
     /** creates new instance of IScope
-     * @param arg0 optional parent scope. if not set will use current scope
+     * @param arg optional parent scope. if not set will use current scope
      * @sample newScopeSample
      */
-    fun NEW(arg0: IScope? = null) = if (arg0 !== null) {
-        Key<IScope>("Scopes.New", arrayOf(arg0))
-    } else {
-        Key("Scopes.New")
-    }
+    val NEW = Key<Option<IScope>, IScope>("Scopes.New")
 
     /** returns root scope of the application
      */
-    fun ROOT() = Key<IScope>("Scopes.Root")
+    val ROOT = Key<Unit, IScope>("Scopes.Root")
 }

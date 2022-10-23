@@ -2,14 +2,14 @@ package com.github.kotlin_di.ioc.dependencies
 
 import com.github.kotlin_di.common.command.Command
 import com.github.kotlin_di.common.command.CommandExecutionError
+import com.github.kotlin_di.common.types.Dependency
+import com.github.kotlin_di.common.types.Key
 import com.github.kotlin_di.ioc.Container
-import com.github.kotlin_di.ioc.Dependency
 import com.github.kotlin_di.ioc.ResolveDependencyError
-import com.github.kotlin_di.ioc.cast
 import com.github.kotlin_di.ioc.scope.MutableScope
 import kotlin.Throws
 
-class Unregister : Dependency {
+class Unregister : Dependency<Key<*, *>, Command> {
 
     class UnregisterCommand(
         private val scope: MutableScope,
@@ -26,10 +26,10 @@ class Unregister : Dependency {
     }
 
     @Throws(ResolveDependencyError::class)
-    override fun invoke(args: Array<out Any>): Command {
+    override fun invoke(args: Key<*, *>): Command {
         try {
-            val scope: MutableScope = cast(Container.currentScope)
-            val key: String = cast(args[0])
+            val scope = Container.currentScope as MutableScope
+            val key: String = args.name
             return UnregisterCommand(scope, key)
         } catch (ex: ResolveDependencyError) {
             throw ex

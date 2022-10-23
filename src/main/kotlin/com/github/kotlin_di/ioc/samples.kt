@@ -1,18 +1,26 @@
 package com.github.kotlin_di.ioc
 
+import com.github.kotlin_di.common.types.Key
+import com.github.kotlin_di.common.types.Some
+import com.github.kotlin_di.common.types.by
 import com.github.kotlin_di.ioc.scope.IScope
 import com.github.kotlin_di.resolve
 
 fun registerSample() {
-    resolve(IoC.REGISTER("dependencyKey", asDependency { 1 }))()
+
+    val key = Key<Unit, Int>("dependencyKey")
+
+    resolve(IoC.REGISTER, key by { 1 })()
 }
 
 fun unregisterSample() {
-    resolve(IoC.UNREGISTER("dependencyKey"))()
+    val key = Key<Unit, Int>("dependencyKey")
+
+    resolve(IoC.UNREGISTER, key)()
 }
 
 fun executeInNewScopeSample() {
-    resolve(Scopes.EXECUTE_IN_NEW_SCOPE()).use {
+    resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
         // do stuff
 
         // if for some reason operation has to terminated
@@ -21,8 +29,8 @@ fun executeInNewScopeSample() {
 }
 
 fun executeInScopeSample() {
-    val scope = resolve(Scopes.NEW())
-    resolve(Scopes.EXECUTE_IN_SCOPE(scope)).use {
+    val scope = resolve(Scopes.NEW)
+    resolve(Scopes.EXECUTE_IN_SCOPE, scope).use {
         // do stuff
 
         // if for some reason operation has to terminated
@@ -31,6 +39,6 @@ fun executeInScopeSample() {
 }
 
 fun newScopeSample() {
-    val newScope: IScope = resolve(Scopes.NEW())
-    val childScope = resolve(Scopes.NEW(newScope))
+    val newScope: IScope = resolve(Scopes.NEW)
+    val childScope = resolve(Scopes.NEW, Some(newScope))
 }

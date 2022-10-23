@@ -2,19 +2,19 @@ package com.github.kotlin_di.ioc.dependencies
 
 import com.github.kotlin_di.common.command.Command
 import com.github.kotlin_di.common.command.CommandExecutionError
+import com.github.kotlin_di.common.types.DRecord
+import com.github.kotlin_di.common.types.Dependency
 import com.github.kotlin_di.ioc.Container
-import com.github.kotlin_di.ioc.Dependency
 import com.github.kotlin_di.ioc.ResolveDependencyError
-import com.github.kotlin_di.ioc.cast
 import com.github.kotlin_di.ioc.scope.MutableScope
 import kotlin.Throws
 
-class Register : Dependency {
+class Register : Dependency<DRecord<*, *>, Command> {
 
     class RegisterCommand(
         private val scope: MutableScope,
         private val key: String,
-        private val dependency: Dependency
+        private val dependency: Dependency<*, *>
     ) : Command {
 
         @Throws(CommandExecutionError::class)
@@ -28,11 +28,10 @@ class Register : Dependency {
     }
 
     @Throws(ResolveDependencyError::class)
-    override fun invoke(arguments: Array<out Any>): Command {
+    override fun invoke(arguments: DRecord<*, *>): Command {
         try {
-            val scope: MutableScope = cast(Container.currentScope)
-            val key: String = cast(arguments[0])
-            val dependency: Dependency = cast(arguments[1])
+            val scope = Container.currentScope as MutableScope
+            val (key, dependency) = arguments
             return RegisterCommand(scope, key, dependency)
         } catch (ex: ResolveDependencyError) {
             throw ex
