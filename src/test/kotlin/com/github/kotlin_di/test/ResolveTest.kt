@@ -42,7 +42,7 @@ class ResolveTest {
             resolve(IoC.REGISTER, intKey by { 1 })()
             assertEquals(1, resolve(intKey))
 
-            resolve(IoC.UNREGISTER, intKey)()
+            resolve(IoC.UNREGISTER, intKey.toString())()
 
             assertThrows<ResolveDependencyError> { resolve(intKey) }
         }

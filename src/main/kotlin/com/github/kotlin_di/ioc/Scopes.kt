@@ -1,11 +1,12 @@
 package com.github.kotlin_di.ioc
 
 import com.github.kotlin_di.common.interfaces.Usable
+import com.github.kotlin_di.common.plugins.KeyDefinition
 import com.github.kotlin_di.common.types.Key
 import com.github.kotlin_di.common.types.Option
 import com.github.kotlin_di.ioc.scope.IScope
 
-object Scopes {
+object Scopes : KeyDefinition {
     /** executes block of code in a specified scope. after execution set back original scope
      * @param arg execution scope
      *
@@ -27,4 +28,8 @@ object Scopes {
     /** returns root scope of the application
      */
     val ROOT = Key<Unit, IScope>("Scopes.Root")
+
+    override val version = "0.0.6"
+
+    override fun keys() = listOf(EXECUTE_IN_SCOPE, EXECUTE_IN_NEW_SCOPE, NEW, ROOT)
 }

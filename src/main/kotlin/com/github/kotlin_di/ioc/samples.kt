@@ -16,14 +16,14 @@ fun registerSample() {
 fun unregisterSample() {
     val key = Key<Unit, Int>("dependencyKey")
 
-    resolve(IoC.UNREGISTER, key)()
+    resolve(IoC.UNREGISTER, key.toString())()
 }
 
 fun executeInNewScopeSample() {
-    resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use {
+    resolve(Scopes.EXECUTE_IN_NEW_SCOPE).use { // it: Closeable
         // do stuff
 
-        // if for some reason operation has to terminated
+        // if for some reason operation has to be terminated
         it.close()
     }
 }

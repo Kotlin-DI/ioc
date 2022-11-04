@@ -10,16 +10,16 @@ import kotlin.jvm.Throws
 
 @Throws(ResolveDependencyError::class)
 inline fun <reified P : Any, reified R : Any> resolve(key: Key<P, R>, args: P): R {
-    return resolve(key.name, args)
+    return resolve(key.toString(), args)
 }
 
 @Throws(ResolveDependencyError::class)
 inline fun <reified A : Any, reified P : Option<A>, reified R : Any> resolve(key: Key<P, R>, args: P = None<A>() as P): R {
-    return resolve(key.name, args)
+    return resolve(key.toString(), args)
 }
 
 inline fun <reified R : Any> resolve(key: Key<Unit, R>): R {
-    return resolve(key.name, Unit)
+    return resolve(key.toString(), Unit)
 }
 
 inline fun <reified P : Any, reified R : Any> resolve(key: String, args: P): R {

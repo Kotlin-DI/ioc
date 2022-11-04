@@ -15,6 +15,13 @@ class ScopesTest {
     private val intKey = Key<Unit, Int>("dependencyKey")
 
     @Test
+    fun `Root scope set by default`() {
+        val root = resolve(Scopes.ROOT)
+        val current = Container.currentScope
+        assertNotEquals(root, current)
+    }
+
+    @Test
     fun `ScopeGuard should redo previous scope`() {
         val scope = Container.currentScope
 
