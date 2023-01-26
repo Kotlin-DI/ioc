@@ -2,8 +2,6 @@ package com.github.kotlin_di
 
 import com.github.kotlin_di.common.types.*
 import com.github.kotlin_di.ioc.Container
-import com.github.kotlin_di.ioc.ScopeContext
-import kotlin.coroutines.coroutineContext
 
 @Throws(ResolveDependencyError::class)
 inline fun <reified P : Any, reified R : Any> resolve(key: Key<P, R>, args: P): R {

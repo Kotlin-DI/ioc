@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 
 plugins {
     kotlin("multiplatform")
@@ -53,7 +53,6 @@ kotlin {
 //        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
 //    }
 
-
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -81,11 +80,10 @@ kotlin {
             }
         }
         val jsMain by getting
-        val jsTest by getting{
+        val jsTest by getting {
             dependencies {
                 implementation(kotlin("test-js"))
             }
-
         }
 //        val nativeMain by getting
     }
