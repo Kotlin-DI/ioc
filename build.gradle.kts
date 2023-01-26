@@ -1,34 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.21"
-    java
-    `java-library`
+    kotlin("multiplatform")
     `maven-publish`
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
-    id("org.jetbrains.dokka") version "1.6.21"
-    id("me.qoomon.git-versioning") version "6.3.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jetbrains.dokka") version "1.7.20"
 }
 
 val kotlinVersion: String by project
 
 group = "com.github.kotlin_di"
-version = "0.0.0-SNAPSHOT"
-gitVersioning.apply {
-    refs {
-        branch(".+") {
-            version = "\${ref}-SNAPSHOT"
-        }
-        tag("v(?<version>.*)") {
-            version = "\${ref.version}"
-        }
-    }
-
-    // optional fallback configuration in case of no matching ref configuration
-    rev {
-        version = "\${commit}"
-    }
-}
+version = "0.1.0"
 
 repositories {
     gradlePluginPortal()
@@ -39,82 +21,72 @@ repositories {
     mavenLocal()
 }
 
-dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-    implementation("com.github.Kotlin-DI:common:0.0.6")
-    testImplementation(platform("org.junit:junit-bom:5.9.0"))
-    testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", "1.6.4")
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
 ktlint {
     disabledRules.set(setOf("no-wildcard-imports"))
 }
 
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn")
-            jvmTarget = "11"
+kotlin {
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "17"
         }
-        dependsOn("ktlintFormat")
-    }
-    test {
-        useJUnitPlatform()
-        testLogging {
-            events("passed", "skipped", "failed")
+        withJava()
+        testRuns["test"].executionTask.configure {
+            useJUnitPlatform()
         }
     }
-
-    register<Copy>("copyGitHooks") {
-        description = "Copy git hooks from scripts/git-hooks"
-        group = "git-hooks"
-        from("$rootDir/scripts/git-hooks/") {
-            include("**/*.sh")
-            rename("(.*).sh", "$1")
-        }
-        into("$rootDir/.git/hooks")
-    }
-
-    register<Exec>("installGitHooks") {
-        description = "Installs the pre-commit git hooks from scripts/git-hooks."
-        group = "git-hooks"
-        onlyIf {
-            !org.apache.tools.ant.taskdefs.condition.Os.isFamily(org.apache.tools.ant.taskdefs.condition.Os.FAMILY_WINDOWS)
-        }
-        dependsOn(named("copyGitHooks"))
-
-        workingDir(rootDir)
-        commandLine("chmod")
-        args("-R", "+x", ".git/hooks/")
-
-        doLast {
-            logger.info("Git hooks installed successfully.")
+    js(IR) {
+        browser {
+            commonWebpackConfig {
+                cssSupport {
+                    enabled.set(true)
+                }
+            }
         }
     }
+//    val hostOs = System.getProperty("os.name")
+//    val isMingwX64 = hostOs.startsWith("Windows")
+//    val nativeTarget = when {
+//        hostOs == "Mac OS X" -> macosX64("native")
+//        hostOs == "Linux" -> linuxX64("native")
+//        isMingwX64 -> mingwX64("native")
+//        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+//    }
 
-    register<Delete>("deleteGitHooks") {
-        group = "git-hooks"
-        description = "Delete the pre-commit git hooks."
-        delete(fileTree(".git/hooks/"))
-    }
 
-    afterEvaluate {
-        tasks["clean"].dependsOn(tasks.named("installGitHooks"))
-    }
-}
-
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = project.group.toString()
-            artifactId = project.name
-            from(components["java"])
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation("com.github.kotlin_di:common:0.1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+            }
         }
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit5"))
+                implementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+            }
+        }
+        val jsMain by getting
+        val jsTest by getting{
+            dependencies {
+                implementation(kotlin("test-js"))
+            }
+
+        }
+//        val nativeMain by getting
     }
 }
