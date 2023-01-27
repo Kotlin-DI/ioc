@@ -1,12 +1,12 @@
 package com.github.kotlin_di.test
 
-import com.github.kotlin_di.common.command.Command
+import com.github.kotlin_di.common.errors.ResolveDependencyError
+import com.github.kotlin_di.common.interfaces.Command
 import com.github.kotlin_di.common.interfaces.Usable
 import com.github.kotlin_di.common.types.DRecord
 import com.github.kotlin_di.common.types.Key
 import com.github.kotlin_di.common.types.by
 import com.github.kotlin_di.ioc.IoC
-import com.github.kotlin_di.ioc.ResolveDependencyError
 import com.github.kotlin_di.ioc.Scopes
 import com.github.kotlin_di.resolve
 import org.junit.jupiter.api.Assertions.assertEquals

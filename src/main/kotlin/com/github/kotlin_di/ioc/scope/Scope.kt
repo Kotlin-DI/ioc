@@ -1,6 +1,6 @@
 package com.github.kotlin_di.ioc.scope
 
-import com.github.kotlin_di.common.types.Dependency
+import com.github.kotlin_di.common.interfaces.Dependency
 import java.util.concurrent.ConcurrentHashMap
 
 class Scope(override var parent: IScope) : MutableScope, LinkedScope {

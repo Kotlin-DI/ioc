@@ -1,6 +1,6 @@
 package com.github.kotlin_di.ioc
 
-import com.github.kotlin_di.common.command.Command
+import com.github.kotlin_di.common.interfaces.Command
 import com.github.kotlin_di.common.plugins.KeyDefinition
 import com.github.kotlin_di.common.types.DRecord
 import com.github.kotlin_di.common.types.Key
