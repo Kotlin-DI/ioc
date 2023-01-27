@@ -1,11 +1,11 @@
 package com.github.kotlin_di.ioc.dependencies
 
-import com.github.kotlin_di.common.command.Command
-import com.github.kotlin_di.common.command.CommandExecutionError
+import com.github.kotlin_di.common.errors.CommandExecutionError
+import com.github.kotlin_di.common.errors.ResolveDependencyError
+import com.github.kotlin_di.common.interfaces.Command
+import com.github.kotlin_di.common.interfaces.Dependency
 import com.github.kotlin_di.common.types.DRecord
-import com.github.kotlin_di.common.types.Dependency
 import com.github.kotlin_di.ioc.Container
-import com.github.kotlin_di.ioc.ResolveDependencyError
 import com.github.kotlin_di.ioc.scope.MutableScope
 import kotlin.Throws
 
@@ -28,10 +28,10 @@ class Register : Dependency<DRecord<*, *>, Command> {
     }
 
     @Throws(ResolveDependencyError::class)
-    override fun invoke(arguments: DRecord<*, *>): Command {
+    override fun invoke(args: DRecord<*, *>): Command {
         try {
             val scope = Container.currentScope as MutableScope
-            val (key, dependency) = arguments
+            val (key, dependency) = args
             return RegisterCommand(scope, key, dependency)
         } catch (ex: ResolveDependencyError) {
             throw ex

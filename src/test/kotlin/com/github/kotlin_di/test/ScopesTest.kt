@@ -1,8 +1,8 @@
 package com.github.kotlin_di.test
 
+import com.github.kotlin_di.common.errors.ResolveDependencyError
 import com.github.kotlin_di.common.types.Key
 import com.github.kotlin_di.ioc.Container
-import com.github.kotlin_di.ioc.ResolveDependencyError
 import com.github.kotlin_di.ioc.Scopes
 import com.github.kotlin_di.ioc.scope.MutableScope
 import com.github.kotlin_di.resolve

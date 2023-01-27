@@ -1,10 +1,10 @@
 package com.github.kotlin_di.ioc.dependencies
 
-import com.github.kotlin_di.common.command.Command
-import com.github.kotlin_di.common.command.CommandExecutionError
-import com.github.kotlin_di.common.types.Dependency
+import com.github.kotlin_di.common.errors.CommandExecutionError
+import com.github.kotlin_di.common.errors.ResolveDependencyError
+import com.github.kotlin_di.common.interfaces.Command
+import com.github.kotlin_di.common.interfaces.Dependency
 import com.github.kotlin_di.ioc.Container
-import com.github.kotlin_di.ioc.ResolveDependencyError
 import com.github.kotlin_di.ioc.scope.MutableScope
 import kotlin.Throws
 
