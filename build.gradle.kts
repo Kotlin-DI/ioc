@@ -8,8 +8,8 @@ plugins {
     java
     `java-library`
     `maven-publish`
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
-    id("org.jetbrains.dokka") version "1.7.20"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jetbrains.dokka")
     id("me.qoomon.git-versioning") version "6.3.0"
 }
 
@@ -43,7 +43,8 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     implementation("com.github.Kotlin-DI:common:$commonVersion")
-    testImplementation(platform("org.junit:junit-bom:5.9.0"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-Beta")
+    testImplementation(platform("org.junit:junit-bom:5.9.2"))
     testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", "1.6.4")
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
@@ -56,7 +57,7 @@ tasks {
     withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn")
-            jvmTarget = "11"
+            jvmTarget = "17"
         }
         dependsOn("ktlintFormat")
     }

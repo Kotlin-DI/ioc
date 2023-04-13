@@ -7,7 +7,7 @@ import com.github.kotlin_di.ioc.scope.init
 import kotlin.concurrent.getOrSet
 
 object Container {
-    private val scope = ThreadLocal<IScope>()
+    internal val scope = ThreadLocal<IScope>()
     private val root = RootScope().apply { init() }
 
     var currentScope: IScope

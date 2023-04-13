@@ -1,7 +1,6 @@
 package com.github.kotlin_di.ioc
 
 import com.github.kotlin_di.common.types.Key
-import com.github.kotlin_di.common.types.Some
 import com.github.kotlin_di.common.types.by
 import com.github.kotlin_di.ioc.scope.IScope
 import com.github.kotlin_di.resolve
@@ -40,5 +39,5 @@ fun executeInScopeSample() {
 
 fun newScopeSample() {
     val newScope: IScope = resolve(Scopes.NEW)
-    val childScope = resolve(Scopes.NEW, Some(newScope))
+    val childScope = resolve(Scopes.NEW, newScope)
 }

@@ -4,10 +4,7 @@ import com.github.kotlin_di.common.interfaces.Dependency
 import com.github.kotlin_di.common.interfaces.Usable
 import com.github.kotlin_di.ioc.IoC
 import com.github.kotlin_di.ioc.Scopes
-import com.github.kotlin_di.ioc.dependencies.ExecuteInScope
-import com.github.kotlin_di.ioc.dependencies.Register
-import com.github.kotlin_di.ioc.dependencies.ScopeNew
-import com.github.kotlin_di.ioc.dependencies.Unregister
+import com.github.kotlin_di.ioc.dependencies.*
 import com.github.kotlin_di.resolve
 
 fun RootScope.init() {
@@ -20,4 +17,5 @@ fun RootScope.init() {
         resolve(Scopes.EXECUTE_IN_SCOPE, scope)
     }
     store[Scopes.ROOT.toString()] = Dependency<Unit, IScope> { this }
+    store[Scopes.WITH_SCOPE.toString()] = WithScope()
 }

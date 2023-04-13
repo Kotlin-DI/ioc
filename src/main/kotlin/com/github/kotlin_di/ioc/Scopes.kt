@@ -5,6 +5,7 @@ import com.github.kotlin_di.common.plugins.KeyDefinition
 import com.github.kotlin_di.common.types.Key
 import com.github.kotlin_di.common.types.Option
 import com.github.kotlin_di.ioc.scope.IScope
+import kotlinx.coroutines.ThreadContextElement
 
 object Scopes : KeyDefinition {
     /** executes block of code in a specified scope. after execution set back original scope
@@ -20,7 +21,7 @@ object Scopes : KeyDefinition {
     val EXECUTE_IN_NEW_SCOPE = Key<Unit, Usable>("Scopes.executeInNewScope")
 
     /** creates new instance of IScope
-     * @param arg optional parent scope. if not set will use current scope
+     * @param arg [IScope] optional parent scope. if not set will use current scope
      * @sample newScopeSample
      */
     val NEW = Key<Option<IScope>, IScope>("Scopes.New")
@@ -29,7 +30,13 @@ object Scopes : KeyDefinition {
      */
     val ROOT = Key<Unit, IScope>("Scopes.Root")
 
+    /**
+     * Creates coroutine context element for scope
+     * @param arg [IScope] optional scope. if not set will use current scope
+     */
+    val WITH_SCOPE = Key<Option<IScope>, ThreadContextElement<IScope>>("Scope.WithScope")
+
     override val version = "0.0.6"
 
-    override fun keys() = listOf(EXECUTE_IN_SCOPE, EXECUTE_IN_NEW_SCOPE, NEW, ROOT)
+    override fun keys() = listOf(EXECUTE_IN_SCOPE, EXECUTE_IN_NEW_SCOPE, NEW, ROOT, WITH_SCOPE)
 }
